@@ -1,5 +1,9 @@
 //also planning to maybe visualize based on cuisine 
 //move boroughs to locationsish 
+//bar graph shows places with most violation 
+
+//title at top: number of violations in each borough and what cuisine (does not consider repeats) 
+
 var ratsUrl = 'https://data.cityofnewyork.us/resource/xx67-kt59.json?$limit=1000'; 
 var rats;
 var ratsArray = [];
@@ -27,10 +31,13 @@ function setup(){
 
 function draw(){
     start++; //will cycle rather than do all at once 
-    borough = ratsArray[start].boro; 
+    borough = ratsArray[start].boro; //this is legal because ratsArray is filled with rats objects that have "boro" and "cuisine_description" attributes 
+    cuisine = ratsArray[start].cuisine_description;
     console.log(start); //used to make sure all pieces of data were being sifted through  (stops at 1000)
     console.log(borough); //used to make sure the right boroughs are being updated accordingly
+    console.log(cuisine);
     ratsArray[start].display(borough); //updates circle size as program runs 
+    ratsArray[start].displayCui(cuisine);
 }
 
 
@@ -92,4 +99,52 @@ function Rats(r){
 
         }
     };
+
+    this.displayCui = function(whichCui){ //choses rectangle to expand based on rectangle display
+        if(whichCui == "Bakery"){
+            
+        }
+        else if(whichCui = "Hamburgers"){
+            
+        }
+        else if (whichCui = "American "){
+            
+        }
+        else if(whichCui = "Jewish/Kosher"){
+            
+        }
+        else if(whichCui = "Delicatessen"){
+            
+        }
+        else if(whichCui = "Ice Cream, Gelato, Yogurt, Ices"){
+            
+        }
+        else if(whichCui = "Chinese"){
+            
+        }
+        else if(whichCui = "Hotdogs"){
+            
+        }
+        else if(whichCui = "Chicken"){
+            
+        }
+        else if (whichCui = "Turkish"){
+            
+        }
+        else if(whichCui = "Caribbean"){
+            
+        }
+        else if(whichCui = "Sandwiches/Salads/Mixed Buffet"){
+            
+        }
+        else if(whichCui = "Bagels/Pretzels"){
+            
+        }
+        else if(whichCui = "Continental"){
+            
+        }
+        else if(whichCui = "Soul Food"){
+            
+        }
+    }; //ends displayCui function
 }
