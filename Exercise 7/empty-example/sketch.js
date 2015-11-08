@@ -18,7 +18,7 @@ function preload(){
 }
 
 function setup(){
-    createCanvas(800, 600);
+    createCanvas(800, 1000);
     for(var i = 0; i < rats.length; i++){
         var o = rats[i];
         ratsArray[i] = new Rats(o); //populates array with rats objects 
@@ -54,41 +54,41 @@ function Rats(r){
         if(whichCirc == "BRONX"){
             bronX = bronX + .8; //updates size of ellipse
             fill(179, 255, 253);
-            ellipse(200, 200, bronX, bronX);
+            ellipse(550, 150, bronX, bronX);
             fill(130);
-            text("BRONX", 200, 200); //keeps name of text (will have to adjust placement to be more centered in ellipse) 
+            text("BRONX", 525, 150); //keeps name of text (will have to adjust placement to be more centered in ellipse) 
 
         }
         else if (whichCirc == "MANHATTAN"){
           manhX = manhX + .8;
           fill(193, 175, 232);
-          ellipse(400, 200, manhX, manhX);
+          ellipse(400, 300, manhX, manhX);
             fill(130);
-            text("MANHATTAN", 400, 200);
+            text("MANHATTAN", 350, 300);
 
         }
         else if (whichCirc == "BROOKLYN"){
             brooX = brooX + .8; 
             fill(255, 169, 162);
-            ellipse(600, 200, brooX, brooX); 
+            ellipse(600, 400, brooX, brooX); 
             fill(130);
-              text("BROOKLYN", 600, 200);
+              text("BROOKLYN", 550, 400);
 
         }
         else if (whichCirc == "QUEENS"){
             queeX = queeX + .8;
             fill(232,200, 135);
-            ellipse(300, 400, queeX, queeX);
+            ellipse(700, 200, queeX, queeX);
              fill(130);
-              text("QUEENS", 300, 400);
+              text("QUEENS", 675, 200);
 
         }
         else if (whichCirc == "STATEN ISLAND"){
             statX = statX + .8;
             fill(132, 255, 117);
-            ellipse(500, 400, statX, statX);
+            ellipse(300, 550, statX, statX);
             fill(130);
-            text("STATEN ISLAND", 500, 400);
+            text("STATEN ISLAND", 250, 550);
 
         }
     };
