@@ -17,6 +17,22 @@ var manhX = 0;
 var statX = 0;
 var queeX = 0; 
 
+var bakery = 0; //all of the potential cuisine descriptions
+var hamburgers = 0;
+var american = 0;
+var jewish = 0;
+var deli = 0;
+var iceCream = 0;
+var chinese = 0;
+var hotDogs = 0;
+var chicken = 0;
+var turkish = 0;
+var caribbean = 0;
+var sandwiches = 0;
+var bagels = 0;
+var continental = 0;
+var soulFood = 0;
+
 function preload(){
 	getRats(); //gets JSON file 
 }
@@ -24,7 +40,7 @@ function preload(){
 function setup(){
     createCanvas(800, 1000);
     for(var i = 0; i < rats.length; i++){
-        var o = rats[i];
+        var o = rats[i]; //o becomes whatever is inside the rats json index
         ratsArray[i] = new Rats(o); //populates array with rats objects 
     }
  }
@@ -37,7 +53,13 @@ function draw(){
     console.log(borough); //used to make sure the right boroughs are being updated accordingly
     console.log(cuisine);
     ratsArray[start].display(borough); //updates circle size as program runs 
-    ratsArray[start].displayCui(cuisine);
+    ratsArray[start].addUp(cuisine);
+    if(mouseIsPressed){
+    ratsArray[start].displayCui(cuisine); //only shows bar graphs if user presses
+    }
+    console.log(bakery);
+    console.log(hamburgers);
+    console.log(chinese);
 }
 
 
@@ -85,7 +107,7 @@ function Rats(r){
         else if (whichCirc == "QUEENS"){
             queeX = queeX + .8;
             fill(232,200, 135);
-            ellipse(700, 200, queeX, queeX);
+            ellipse(700, 200, queeX, queeX); 
              fill(130);
               text("QUEENS", 675, 200);
 
@@ -99,52 +121,71 @@ function Rats(r){
 
         }
     };
+    
+    this.addUp = function(whichCui){
+        if(whichCui == "Bakery"){
+            bakery = bakery + .5;
+        }
+        else if(whichCui == "Hamburgers"){
+            hamburgers = hamburgers + .5; 
+        }
+        else if (whichCui == "American "){
+            american = american + .5;
+        }
+        else if(whichCui == "Jewish/Kosher"){
+            jewish = jewish + .5;
+        }
+        else if(whichCui == "Delicatessen"){
+            deli = deli + .5;
+        }
+        else if(whichCui == "Ice Cream, Gelato, Yogurt, Ices"){
+            iceCream = iceCream + .5;
+        }
+        else if(whichCui == "Chinese"){
+            chinese = chinese + .5;
+        }
+        else if(whichCui == "Hotdogs"){
+            hotDogs = hotDogs + .5; 
+        }
+        else if(whichCui == "Chicken"){
+            chicken = chicken + .5;
+        }
+        else if (whichCui == "Turkish"){
+            turkish = turkish + .5;
+        }
+        else if(whichCui == "Caribbean"){
+            caribbean = caribbean + .5;
+        }
+        else if(whichCui == "Sandwiches/Salads/Mixed Buffet"){
+            sandwiches = sandwiches + .5;
+        }
+        else if(whichCui == "Bagels/Pretzels"){
+            bagels = bagels + .5;
+        }
+        else if(whichCui == "Continental"){
+            continental = continental + .5;
+        }
+        else if(whichCui == "Soul Food"){
+            soulFood = soulFood + .5;
+        }
+    }; 
 
     this.displayCui = function(whichCui){ //choses rectangle to expand based on rectangle display
-        if(whichCui == "Bakery"){
-            
-        }
-        else if(whichCui = "Hamburgers"){
-            
-        }
-        else if (whichCui = "American "){
-            
-        }
-        else if(whichCui = "Jewish/Kosher"){
-            
-        }
-        else if(whichCui = "Delicatessen"){
-            
-        }
-        else if(whichCui = "Ice Cream, Gelato, Yogurt, Ices"){
-            
-        }
-        else if(whichCui = "Chinese"){
-            
-        }
-        else if(whichCui = "Hotdogs"){
-            
-        }
-        else if(whichCui = "Chicken"){
-            
-        }
-        else if (whichCui = "Turkish"){
-            
-        }
-        else if(whichCui = "Caribbean"){
-            
-        }
-        else if(whichCui = "Sandwiches/Salads/Mixed Buffet"){
-            
-        }
-        else if(whichCui = "Bagels/Pretzels"){
-            
-        }
-        else if(whichCui = "Continental"){
-            
-        }
-        else if(whichCui = "Soul Food"){
-            
-        }
+            fill(255);
+            rect(30, 30, bakery, 10);
+            rect(30, 60, hamburgers, 10);
+            rect(30, 90, american, 10);
+            rect(30, 120, jewish, 10);
+            rect(30, 150, deli, 10);    
+            rect(30, 180, iceCream, 10);
+            rect(30, 210, chinese, 10);
+            rect(30, 240, hotDogs, 10);
+            rect(30, 270, chicken, 10);
+            rect(30, 300, turkish, 10);
+            rect(30, 330, caribbean, 10);
+            rect(30, 360, sandwiches, 10);
+            rect(30, 390, bagels, 10);
+            rect(30, 420, continental, 10);
+            rect(30, 450, soulFood, 10);
     }; //ends displayCui function
 }
