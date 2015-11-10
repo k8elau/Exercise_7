@@ -1,14 +1,9 @@
-//also planning to maybe visualize based on cuisine 
-//move boroughs to locationsish 
-//bar graph shows places with most violation 
-
-//title at top: number of violations in each borough and what cuisine (does not consider repeats) 
-
 var ratsUrl = 'https://data.cityofnewyork.us/resource/xx67-kt59.json?$limit=1000'; 
 var rats;
 var ratsArray = [];
-var test;
-var start = 0;
+var food = ['Bakery', 'Burgers', 'American', 'Kosher', 'Deli', 'Ice Cream', 'Chinese', 'Hot Dogs', 'Chicken', 'Turkish', 'Sandwiches', 'Bagels', 'Continental', 'Soul Food'];
+
+var start = 0; //
 var borough; 
 
 var bronX = 0; //size for each circle 
@@ -17,7 +12,7 @@ var manhX = 0;
 var statX = 0;
 var queeX = 0; 
 
-var bakery = 0; //all of the potential cuisine descriptions
+var bakery = 0; //size for each bar graph
 var hamburgers = 0;
 var american = 0;
 var jewish = 0;
@@ -33,33 +28,33 @@ var bagels = 0;
 var continental = 0;
 var soulFood = 0;
 
+var foodVal = [bakery, hamburgers, american, jewish, deli, iceCream, chinese, hotDogs, turkish, caribbean, sandwiches, bagels, continental, soulFood]; //will hold integer values of food for bar graphs size
+
+var rectBegin = 80; //where the bar graph starts horizontally
+var rectHeight = 10; //how tall each rectangle is
+var cuiStart = 10; //where the text of each cuisine starts
+var title = "Visual Representation of Number of Health Violations of Selected Restaurants in NY Boroughs";
+
 function preload(){
 	getRats(); //gets JSON file 
 }
 
 function setup(){
-    createCanvas(800, 1000);
+    createCanvas(800, 600);
     for(var i = 0; i < rats.length; i++){
         var o = rats[i]; //o becomes whatever is inside the rats json index
         ratsArray[i] = new Rats(o); //populates array with rats objects 
     }
+    writeText(); //writes all the text 
  }
 
 function draw(){
-    start++; //will cycle rather than do all at once 
-    borough = ratsArray[start].boro; //this is legal because ratsArray is filled with rats objects that have "boro" and "cuisine_description" attributes 
-    cuisine = ratsArray[start].cuisine_description;
-    console.log(start); //used to make sure all pieces of data were being sifted through  (stops at 1000)
-    console.log(borough); //used to make sure the right boroughs are being updated accordingly
-    console.log(cuisine);
+    start++; //will cycle through every json point 
+    borough = ratsArray[start].boro; //this statement and the next is legal because ratsArray is filled with rats objects that have "boro" and "cuisine_description" attributes 
+    cuisine = ratsArray[start].cuisine_description; 
     ratsArray[start].display(borough); //updates circle size as program runs 
-    ratsArray[start].addUp(cuisine);
-    if(mouseIsPressed){
-    ratsArray[start].displayCui(cuisine); //only shows bar graphs if user presses
-    }
-    console.log(bakery);
-    console.log(hamburgers);
-    console.log(chinese);
+    ratsArray[start].addUp(cuisine); //updates individual cuisine size of rect
+    ratsArray[start].displayCui(); //updates and displays bar graphs using for loop
 }
 
 
@@ -74,7 +69,22 @@ function ratsDownloaded(){
 	console.log(rats.length); // how many records?
 }
 
-
+function writeText(){
+    var start = 153;
+    for(var j = 0; j < 14; j++){
+    text(food[j], cuiStart, start); //writes down all the cuisine descriptions next to the respective bar graph 
+        start = start + 30;
+    }
+    text("BRONX", 530, 155);
+    text("MANHATTAN", 360, 300);
+    text("BROOKLYN", 565, 400);
+    text("QUEENS", 675, 205);
+    text("STATEN ISLAND", 250, 550);
+    push(); //so text size doesn't affect the boroughs in the display function
+    textSize(18);
+    text(title, 20, 50);
+    pop();
+}
 function Rats(r){
     this.boro = r.boro;
     this.cuisine_description = r.cuisine_description; //will later be implemented - maybe end display most prominent cuisine in each boro that rats are attracted to? 
@@ -85,7 +95,7 @@ function Rats(r){
             fill(179, 255, 253);
             ellipse(550, 150, bronX, bronX);
             fill(130);
-            text("BRONX", 525, 150); //keeps name of text (will have to adjust placement to be more centered in ellipse) 
+            text("BRONX", 530, 155); //keeps name of text when ellipse is drawn
 
         }
         else if (whichCirc == "MANHATTAN"){
@@ -93,7 +103,7 @@ function Rats(r){
           fill(193, 175, 232);
           ellipse(400, 300, manhX, manhX);
             fill(130);
-            text("MANHATTAN", 350, 300);
+            text("MANHATTAN", 360, 300);
 
         }
         else if (whichCirc == "BROOKLYN"){
@@ -101,7 +111,7 @@ function Rats(r){
             fill(255, 169, 162);
             ellipse(600, 400, brooX, brooX); 
             fill(130);
-              text("BROOKLYN", 550, 400);
+              text("BROOKLYN", 565, 400);
 
         }
         else if (whichCirc == "QUEENS"){
@@ -109,7 +119,7 @@ function Rats(r){
             fill(232,200, 135);
             ellipse(700, 200, queeX, queeX); 
              fill(130);
-              text("QUEENS", 675, 200);
+              text("QUEENS", 675, 205);
 
         }
         else if (whichCirc == "STATEN ISLAND"){
@@ -120,72 +130,62 @@ function Rats(r){
             text("STATEN ISLAND", 250, 550);
 
         }
-    };
+    }; //ends display function
     
     this.addUp = function(whichCui){
         if(whichCui == "Bakery"){
-            bakery = bakery + .5;
+            foodVal[0] = foodVal[0] + .5; //updates bakery value by .5, same for rest of else if statements
         }
         else if(whichCui == "Hamburgers"){
-            hamburgers = hamburgers + .5; 
+            foodVal[1] = foodVal[1] + .5;
         }
         else if (whichCui == "American "){
-            american = american + .5;
+            foodVal[2] = foodVal[2] + .5;
         }
         else if(whichCui == "Jewish/Kosher"){
-            jewish = jewish + .5;
+            foodVal[3] = foodVal[3] + .5;
         }
         else if(whichCui == "Delicatessen"){
-            deli = deli + .5;
+            foodVal[4] = foodVal[4] + .5;
         }
         else if(whichCui == "Ice Cream, Gelato, Yogurt, Ices"){
-            iceCream = iceCream + .5;
+            foodVal[5] = foodVal[5] + .5;
         }
         else if(whichCui == "Chinese"){
-            chinese = chinese + .5;
+            foodVal[6] = foodVal[6] + .5;
         }
         else if(whichCui == "Hotdogs"){
-            hotDogs = hotDogs + .5; 
+            foodVal[7] = foodVal[7] + .5;
         }
         else if(whichCui == "Chicken"){
-            chicken = chicken + .5;
+            foodVal[8] = foodVal[8] + .5;
         }
         else if (whichCui == "Turkish"){
-            turkish = turkish + .5;
+            foodVal[9] = foodVal[9] + .5;
         }
         else if(whichCui == "Caribbean"){
-            caribbean = caribbean + .5;
+            foodVal[10] = foodVal[10] + .5;
         }
         else if(whichCui == "Sandwiches/Salads/Mixed Buffet"){
-            sandwiches = sandwiches + .5;
+            foodVal[11] = foodVal[11] + .5;
         }
         else if(whichCui == "Bagels/Pretzels"){
-            bagels = bagels + .5;
+            foodVal[12] = foodVal[12] + .5;
         }
         else if(whichCui == "Continental"){
-            continental = continental + .5;
+            foodVal[13] = foodVal[13] + .5;
         }
         else if(whichCui == "Soul Food"){
-            soulFood = soulFood + .5;
+           foodVal[14] = foodVal[14] + .5;
         }
-    }; 
+    }; //ends addUp function
 
-    this.displayCui = function(whichCui){ //choses rectangle to expand based on rectangle display
-            fill(255);
-            rect(30, 30, bakery, 10);
-            rect(30, 60, hamburgers, 10);
-            rect(30, 90, american, 10);
-            rect(30, 120, jewish, 10);
-            rect(30, 150, deli, 10);    
-            rect(30, 180, iceCream, 10);
-            rect(30, 210, chinese, 10);
-            rect(30, 240, hotDogs, 10);
-            rect(30, 270, chicken, 10);
-            rect(30, 300, turkish, 10);
-            rect(30, 330, caribbean, 10);
-            rect(30, 360, sandwiches, 10);
-            rect(30, 390, bagels, 10);
-            rect(30, 420, continental, 10);
-            rect(30, 450, soulFood, 10);
+    this.displayCui = function(){ //choses rectangle to expand based on rectangle display
+            fill(0);    
+            var start = 145;
+            for(var i = 0; i < 14; i++){
+                rect(rectBegin, start, foodVal[i], rectHeight); //uses for loop to draw every rectangle
+                start = start + 30;
+            }
     }; //ends displayCui function
 }
